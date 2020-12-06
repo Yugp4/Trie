@@ -1,0 +1,7 @@
+if(root.sibling != null) {
+				recurse(s, ind, start, end, allWords, root.sibling);
+				return;
+			}else {
+				root.sibling = new TrieNode(new Indexes(ind, (short)(start), (short)(end)), null, null);
+				return;
+			}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Canvas xmlns="http://www.jgrasp.org">
+  <Language>Java</Language>
+  <ShowTypes>false</ShowTypes>
+  <Version>2</Version>
+  <Grid>
+    <Snap>true</Snap>
+    <Show>false</Show>
+  </Grid>
+  <Scope id="0">
+    <Name>buildTrie</Name>
+    <Signature>([Ljava/lang/String;)Ltrie/TrieNode;</Signature>
+    <DeclaringType>trie.Trie</DeclaringType>
+    <Depth>1</Depth>
+  </Scope>
+  <Frame>
+    <Bounds>
+      <AutoSize>true</AutoSize>
+      <X>5</X>
+      <Y>300</Y>
+      <W>322</W>
+      <H>284</H>
+    </Bounds>
+    <Viewer>
+      <ScopeID>0</ScopeID>
+      <Expression>`local trie.TrieNode` trie</Expression>
+      <ViewerClass>jgrasp_viewers.java__lang__Object_LinkedView</ViewerClass>
+    </Viewer>
+  </Frame>
+  <Size>
+    <W>649</W>
+    <H>323</H>
+  </Size>
+  <ESize>
+    <W>649</W>
+    <H>323</H>
+  </ESize>
+</Canvas>

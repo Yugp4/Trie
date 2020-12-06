@@ -1,0 +1,94 @@
+if(root.firstChild != null) {
+			int sIndex = 0;
+			int eIndex = -1;
+			int len = s.length();
+			if(start != (short)(0) || end != (short)(s.length()-1)) {
+				sIndex = start;
+				len = end;
+			}
+			String ptrString = allWords[root.firstChild.substr.wordIndex].substring(root.firstChild.substr.startIndex, (root.firstChild.substr.endIndex)+1);
+			if(ptrString.length() < s.length()) {
+				len = ptrString.length();
+			}
+			if(start != (short)(0) || end != (short)(s.length()-1)) {
+				String rootString = allWords[root.substr.wordIndex].substring(root.substr.startIndex, (root.substr.endIndex)+1);
+				int rootLength = rootString.length();
+				for(int c = sIndex; c < len; c++) {
+					if(s.charAt(c-rootLength) != ptrString.charAt(c-rootLength)) {
+						break;
+					}
+					eIndex = c;
+				}
+			}else {
+				for(int c = sIndex; c < len; c++) {
+					if(s.charAt(c) != ptrString.charAt(c)) {
+						break;
+					}
+					eIndex = c;
+				}
+			}
+			if(eIndex == -1) {
+				if(root.firstChild.sibling != null) {
+					recurse(s, ind, (short)(start), (short)(end), allWords, root.firstChild.sibling);
+					return;
+				}else {
+					root.firstChild.sibling = new TrieNode(new Indexes(ind, (short)(start), (short)(end)), null, null);
+					return;
+				}
+			}else {
+				if(root.firstChild.firstChild != null) {
+					if(eIndex - sIndex < root.firstChild.substr.endIndex) {
+						TrieNode pre = new TrieNode(new Indexes(root.firstChild.substr.wordIndex, (short)(sIndex), (short)(eIndex)), null, null);
+						pre.firstChild = new TrieNode(new Indexes(root.firstChild.substr.wordIndex, (short)(root.firstChild.substr.startIndex+(pre.substr.endIndex+1)), root.firstChild.substr.endIndex), root.firstChild.firstChild, null);
+						root.firstChild = pre;
+						
+						recurse(s.substring(eIndex+1), ind, (short)(eIndex+1), (short)(end), allWords, root.firstChild);
+						return;
+					}else {
+					recurse(s.substring(eIndex +1), ind, (short)(eIndex+1), (short)(end), allWords, root.firstChild);
+					return;
+					}
+				}else {
+					TrieNode common = new TrieNode(null, null, null);
+					common.substr = new Indexes(root.firstChild.substr.wordIndex, (short)(sIndex), (short)(eIndex));
+					common.firstChild = new TrieNode(new Indexes(root.firstChild.substr.wordIndex, (short)(eIndex+1), (short)(root.firstChild.substr.endIndex)),null, null);
+					common.sibling = root.firstChild.sibling;
+					common.firstChild.sibling = new TrieNode(new Indexes(ind, (short)(eIndex+1), (short)(end)), null, null);
+					root.firstChild = new TrieNode(common.substr, common.firstChild, common.sibling);
+					return;
+				}
+			}
+		}else {
+			int sIndex = start;
+			int eIndex = -1;
+			int len = end;
+			String rootString = allWords[root.substr.wordIndex].substring(root.substr.startIndex, root.substr.endIndex+1);
+			if(rootString.length() < s.length()) {
+				len = rootString.length();
+			}
+			for(int c = sIndex; c < len; c++) {
+				if(s.charAt(c-start) != rootString.charAt(c-start)) {
+					break;
+				}
+				eIndex = c;
+			}
+			if(eIndex == -1) {
+				if(root.sibling != null) {
+					recurse(s, ind, start, end, allWords, root.sibling);
+					return;
+				}else {
+					root.sibling = new TrieNode(new Indexes(ind, (short)(start), (short)(end)), null, null);
+					return;
+				}
+			}else {
+				TrieNode common = new TrieNode(null, null, null);
+				common.substr = new Indexes(root.substr.wordIndex, (short)(sIndex), (short)(eIndex));
+				common.firstChild = new TrieNode(new Indexes(root.substr.wordIndex, (short)(eIndex+1), (short)(root.substr.endIndex)), null, null);
+				common.sibling = root.sibling;
+				common.firstChild.sibling = new TrieNode(new Indexes(ind, (short)(eIndex+1), (short)(end)), null, null);
+				root.substr = common.substr;
+				root.firstChild = common.firstChild;
+				root.sibling = common.sibling;
+				return;
+			}
+		}
